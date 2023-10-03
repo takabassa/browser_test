@@ -1,0 +1,11 @@
+<movie>
+    <fileName>./T1.mp4</fileName>
+    <movieTime>
+        <start>スタート時間</start>
+        <end>停止時間</end>
+    </movieTime>
+    <movieSize>
+        <height>縦サイズ</height>
+        <width>横サイズ</width>
+    </movieSize>
+</movie>

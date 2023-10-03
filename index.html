@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>teesstt</title>
+</head>
+<body>
+    <video id="mov" src=""></video>
+    <script>
+        window.onload = function() {
+            // XMLファイルのパスを指定
+            const xmlPath = 'test.xml';
+            // XMLHttpRequestを使用してXMLファイルを読み込む
+            const xhr = new XMLHttpRequest();
+            // XMLデータの読み込みが完了したかどうかを確認し、データを取得
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // データはxhr.responseTextに格納される
+                    const xmlString = xhr.responseText;
+                    var value = "";
+                    // XMLをDOMとして解析
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+                    // XPathを使用して特定のタグの中身を抽出 (ここではtimestampタグ)
+                    const nameElements = xmlDoc.evaluate('//fileName', xmlDoc, null, XPathResult.ANY_TYPE, null);
+                    // iterateNext(): そのリストから次の要素を取得
+                    let nameNode = nameElements.iterateNext();
+                    while (nameNode) {
+                        value = nameNode.textContent;
+                        nameNode = nameElements.iterateNext();
+                    }
+                    var video = document.getElementById("mov");
+                    video.src = value;
+                    console.log(value);
+                }
+            };
+            xhr.open('GET', xmlPath, true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
